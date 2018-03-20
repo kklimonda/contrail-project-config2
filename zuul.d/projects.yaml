@@ -1,0 +1,10 @@
+# Test commit
+- project:
+    name: Juniper/contrail-project-config
+    check:
+      jobs:
+        - zuulv3-self-test
+    gate:
+      jobs:
+        - noop
+

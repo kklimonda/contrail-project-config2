@@ -1,0 +1,68 @@
+elements-dir: /etc/nodepool/elements
+images-dir: /opt/nodepool_dib
+
+cron:
+  cleanup: '*/1 * * * *'
+  check:   '*/15 * * * *'
+
+zookeeper-servers:
+  - host: zuul01.contrail.juniper.net
+
+labels:
+  - name: ubuntu-xenial
+    image: ubuntu-xenial
+    min-ready: 0
+    provides:
+      - name: juni
+
+providers:
+  - name: jnpr-cluster-c
+    region-name: "RegionOne"
+    cloud: jnpr-cluster-c
+    api-timeout: 60
+    boot-timeout: 120
+    clean-floating-ips: true
+    rate: 1.0
+    ipv6-preferred: false
+    image-type: 'qcow2'
+    image-name-format: 'template-{image_name}-{timestamp}'
+    hostname-format: '{label.name}-{provider.name}-{node.id}'
+    diskimages:
+      - name: ubuntu-xenial
+    pools:
+      - name: contrail-main
+        max-servers: 30
+        availability-zones:
+          - nova
+        networks:
+          - management
+          - dataplane
+        labels:
+          - name: ubuntu-xenial
+            flavor-name: m1.small
+            diskimage: ubuntu-xenial
+            console-log: True
+            key-name: ci-shared-ssh-key
+
+diskimages:
+  - name: ubuntu-xenial
+    elements:
+      - ubuntu
+      - vm
+      - growroot
+      - nodepool-base
+      - contrail-builder
+    release: xenial
+    formats:
+      - qcow2
+    env-vars:
+      TMPDIR: /opt/dib_tmp
+      DIB_CHECKSUM: '1'
+      DIB_IMAGE_CACHE: /opt/dib_cache
+      DIB_APT_LOCAL_CACHE: '0'
+      DIB_DISABLE_APT_CLEANUP: '1'
+      DIB_GRUB_TIMEOUT: '0'
+      DIB_DISTRIBUTION_MIRROR: 'http://10.84.5.38:8000/ubuntu'
+      DIB_DEBOOTSTRAP_EXTRA_ARGS: '--no-check-gpg'
+      DIB_DEBIAN_COMPONENTS: 'main,universe'
+

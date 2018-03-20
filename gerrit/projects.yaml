@@ -1,0 +1,9 @@
+- project: Juniper/contrail-project-config
+  description: Configuration files for project CI systems
+
+- project: Juniper/zuul-jobs
+  description: A frozen copy of openstack-infra/zuul-jobs
+
+- project: Juniper/contrail-zuul-jobs
+  description: Contrail-specific set of zuul jobs
+

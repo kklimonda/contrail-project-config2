@@ -1,0 +1,11 @@
+- tenant:
+    name: contrail
+    max-job-timeout: -1
+    source:
+      gerrit:
+        config-projects:
+          - Juniper/contrail-project-config
+        untrusted-projects:
+          - Juniper/zuul-jobs
+          - Juniper/contrail-zuul-jobs
+

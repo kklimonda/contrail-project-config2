@@ -1,0 +1,13 @@
+- hosts: localhost
+  roles:
+    - role: emit-job-header
+      zuul_log_url: "http://logs.contrail.juniper.net"
+
+- hosts: all
+  roles:
+    - add-build-sshkey
+    - start-zuul-console
+    - validate-host
+    - role: configure-mirrors
+      set_apt_mirrors_trusted: True
+
