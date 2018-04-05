@@ -7,5 +7,8 @@
           - Juniper/contrail-project-config
         untrusted-projects:
           - Juniper/zuul-jobs
+      github:
+        untrusted-projects:
           - Juniper/contrail-zuul-jobs
+          - Juniper/contrail-ui
 
